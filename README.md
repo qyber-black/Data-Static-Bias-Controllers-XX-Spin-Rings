@@ -1,92 +1,72 @@
-# data Energy landscape controllers original dataset
+# Static Bias Controllers for XX Spin-1/2 Rings
 
-Original dataset for energy landscape control.
+The data set contains the original energy landscape controller dataset used in several papers including
+https://qyber.black/spinnet/paper-feedback-control-laws and
+https://qyber.black/spinnet/paper-sensiitivity-jt.
 
-## Getting started
+## Data files
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The controller dataset is contained in the directory data-set.  The data files are in Matlab MAT v7.3 format (created with Matlab 2021b).  The naming convention is
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+  <code>data_D-N-M.mat</code>
 
-## Add your files
+where
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+  <code>D</code> - indicates type of readout at target time:
+      <code>t </code>  controllers for readout at specific time,
+      <code>dt</code>  controllers for average readout over time window;
+  <code>N</code> - number of spins in the network from 3 to 20;
+  <code>M</code> - information transfer from spin <code>|1></code> to <code>|M></code> for <code>M = 2,...,ceil(N/2)</code>.
 
-```
-cd existing_repo
-git remote add origin https://qyber.black/lw1660/data-energy-landscape-controllers-original-dataset.git
-git branch -M main
-git push -uf origin main
-```
+Each data file contains the following variables/structures
 
-## Integrate with your tools
+  <code>info</code> - struct containing data set information
 
-- [ ] [Set up project integrations](https://qyber.black/lw1660/data-energy-landscape-controllers-original-dataset/-/settings/integrations)
+    <code>N </code>              - size of XX ring
+    <code>in</code>              - initial state / input spin
+    <code>out</code>             - readout state / output spin
+    <code>fastest_min_err</code> - maximum error for optimisation result to be considered for fastest information transfer
+    <code>dt</code>              - readout time window; 0 for instantaneous readout
 
-## Collaborate with your team
+  <code>results</code> - cell array of optimisation results, with each cell containing the following fields:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+    <code>err</code>       - error/infidelity of controller
+    <code>exec_time</code> - time it took to find controller with L-BFGS optimiser, on single core Xeon E7 2.7GHz
+    <code>exec_flag</code> - exist flag of matlab optimiser
+    <code>output</code>    - output of matlab optimiser
+    <code>bias</code>      - vector of biases on spins
+    <code>init_bias</code> - initial value for bias
+    <code>time</code>      - readout time at spin M (with time window time+/-info.dt/2)
+    <code>init_time</code> - initial value for time
+    <code>results_idx_best</code>    - index for results of best controller
+    <code>results_idx_fastest</code> - index for results of fastest controller (with error smaller than info.fastest_min_err).
 
-## Test and Deploy
+ <code>sensitivity</code> - struct of controller sensitivities
 
-Use the built-in continuous integration in GitLab.
+    <code>error</code>     - errors of controllers, in order of incrasing infidelity
+    <code>dpdJ_norm</code> - norm of sensitivities of controller w.r.t. uncertainties in couplings in same order than error.
+    <code>taub</code>      - Kendall \tau_b correlation between error and sensitivity
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Figures
 
-***
+The data is also visualised in the following figures in PNG and Matlab figure files (generated with Matlab 2021b)
 
-# Editing this README
+* <code>bias_D-N-M.{fig,png}</code>
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Results for optimizing the information transfer probability from spin 1 to M for an XX-ring of N spins over the spatial biases and time.  The left column shows the biases and evolution (in blue vs. the natural evolution in red) giving the best fidelity at time T and the best error. The middle columns shows the fastest solution found with a fidelity greater than fastest_min at tme T The right column shows the overall solutions found by repeated optimization, plotting the time vs. the logarithm of the infidelity and a histogram of the logarithm of the infidelity. The bottom row shows the eigenstructure of the best and the fastest solution and their symmetries, with the eigenvectors being the columns of the matrices (in cyan, green and red rows indicate the |in> and |out> state resp.) and the corresponding eigenvalues at the bottom (in purple).
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+*  <code>fastest_D.{fig.png}</code>
 
-## Name
-Choose a self-explaining name for your project.
+Shortest times achieved for instantaneous transition fidelities greater than 0.999 for D=t or 0.99 for D=dt for rings of size N = 3, ..., 20 and transitions from 1 to M = 2, ..., ceil(N/2). Note that for some transitions no solution with high fidelity were found, so no fastest results are reported (see data files).  The color of the bars indicate the infidelity of the fastest solution.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+*  sensitivity_D-N-M.{fig,png}
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Logarithm of transfer probability (red) and logarithm of sensitivity (blue), ordered by increasing infidelity from left to right, of the 1 -> M controllers of an N-ring.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Dataset generation
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+The dataset was generated using the <code>create_data_set.m</code> function in the the directory <code>matlab</matlab>.  This function basically converts the controller data in the directory <code>matlab/results</code>.  This data was generated using https://qyber.black/spinnet/code-matspinnet and the matlab functions in the directory <code>matlab</code>.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+%% Analysis
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+The directory <code>analysis_RNC</code> contains some code previously used to analyze the dataset in https://qyber.black/spinnet/paper-sensiitivity-jt and spreadsheets summarizing the previous results.
