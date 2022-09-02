@@ -24,6 +24,14 @@ For further details see
 [[PDF:paper]](https://langbein.org/wp-content/uploads/2016/07/FeedbackControlLaws-2.pdf)
 [[Details]](https://langbein.org/design-feedback-control-laws-information-transfer-spintronics-networks/)
 
+Cite the original published version as
+
+[4] FC Langbein, SG Schirmer, EA Jonckheere. **Static Bias Controllers for XX Spin-1/2 Rings**. Data set, figshare, 3rd July 2016.
+[[DOI:10.6084/m9.figshare.3485240.v1]](https://dx.doi.org/10.6084/m9.figshare.3485240.v1)
+[[Details]](https://langbein.org/static-bias-controllers-xx-spin-12-rings)
+
+The original archive is also available as [[FeedbackControlLaws20160703.zip]](uploads/c6fe0f14e219d0379d3721f66b2acc71/FeedbackControlLaws20160703.zip)
+
 ## Data files
 
 The controller dataset is contained in the directory data-set.  The data files are in Matlab MAT v7.3 format (created with Matlab 2021b).  The naming convention is
