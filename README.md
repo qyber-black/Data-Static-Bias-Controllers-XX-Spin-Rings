@@ -51,15 +51,15 @@ Each data file contains the following variables/structures
 
 The data is also visualised in the following figures in PNG and Matlab figure files (generated with Matlab 2021b)
 
-* bias_D-N-M.{fig,png}
+ bias_D-N-M.{fig,png}
 
 Results for optimizing the information transfer probability from spin 1 to M for an XX-ring of N spins over the spatial biases and time.  The left column shows the biases and evolution (in blue vs. the natural evolution in red) giving the best fidelity at time T and the best error. The middle columns shows the fastest solution found with a fidelity greater than fastest_min at tme T The right column shows the overall solutions found by repeated optimization, plotting the time vs. the logarithm of the infidelity and a histogram of the logarithm of the infidelity. The bottom row shows the eigenstructure of the best and the fastest solution and their symmetries, with the eigenvectors being the columns of the matrices (in cyan, green and red rows indicate the |in> and |out> state resp.) and the corresponding eigenvalues at the bottom (in purple).
 
-*  fastest_D.{fig.png}
+  fastest_D.{fig.png}
 
 Shortest times achieved for instantaneous transition fidelities greater than 0.999 for D=t or 0.99 for D=dt for rings of size N = 3, ..., 20 and transitions from 1 to M = 2, ..., ceil(N/2). Note that for some transitions no solution with high fidelity were found, so no fastest results are reported (see data files).  The color of the bars indicate the infidelity of the fastest solution.
 
-*  sensitivity_D-N-M.{fig,png}
+  sensitivity_D-N-M.{fig,png}
 
 Logarithm of transfer probability (red) and logarithm of sensitivity (blue), ordered by increasing infidelity from left to right, of the 1 -> M controllers of an N-ring.
 
@@ -67,6 +67,6 @@ Logarithm of transfer probability (red) and logarithm of sensitivity (blue), ord
 
 The dataset was generated using the create_data_set.m function in the the directory matlab</matlab>.  This function basically converts the controller data in the directory matlab/results.  This data was generated using https://qyber.black/spinnet/code-matspinnet and the matlab functions in the directory matlab.
 
-%% Analysis
+## Analysis
 
 The directory analysis_RNC contains some code previously used to analyze the dataset in https://qyber.black/spinnet/paper-sensiitivity-jt and spreadsheets summarizing the previous results.
