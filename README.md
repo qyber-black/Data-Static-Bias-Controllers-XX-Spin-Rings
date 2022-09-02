@@ -1,8 +1,28 @@
 # Static Bias Controllers for XX Spin-1/2 Rings
 
-The data set contains the original energy landscape controller dataset used in several papers including
-https://qyber.black/spinnet/paper-feedback-control-laws and
-https://qyber.black/spinnet/paper-sensiitivity-jt.
+Propagation of information encoded in spin degrees of freedom  through networks of coupled spins enables important  applications in spintronics and quantum information  processing. This data set contains the results of applying  optimal control of information propagation in networks of  spin-1/2 particles with uniform nearest neighbor XX-couplings  forming a ring with a single excitation in the network as simple prototype of a router for spin-based information. The control is implemented via spatially distributed potentials, which remain constant during information transfer. The limited degrees of freedom makes finding a control that  maximizes the transfer probability in a short time difficult.
+
+It had been originally computed for
+
+[1] FC Langbein, SG Schirmer, EA Jonckheere. **Time optimal information transfer in spintronics networks**. _IEEE Conf Decision and Control_, pp. 6454-6459, 2015.
+[[DOI:10.1109/CDC.2015.7403236]](http://dx.doi.org/10.1109/CDC.2015.7403236)
+[[arXiv:1508.00928]](http://arxiv.org/abs/1508.00928)
+[[PDF:paper]](https://langbein.org/wp-content/uploads/2015/11/CDC2015.pdf)
+[[Details]](https://langbein.org/langbein2015/)
+
+For further details see
+
+[2] EA Jonckheere, SG Schirmer, FC Langbein. **Jonckheere-Terpstra test for nonclassical error versus log-sensitivity relationship of quantum spin network controllers**. _Int J Robust and Nonlinear Control_, **28**(6):2383-2403, 2018.
+[[DOI:10.1002/rnc.4022]](https://dx.doi.org/10.1002/rnc.4022)
+[[arXiv:1612.02784]](http://arxiv.org/abs/1612.02784)
+[[PDF:paper]](https://langbein.org/wp-content/uploads/2016/10/spin-transport-1.pdf)
+[[Details]](https://langbein.org/jonckheere-terpstra/)
+
+[3] SG Schirmer, EA Jonckheere, FC Langbein. **Design of Feedback Control Laws for Information Transfer in Spintronics Networks**. _IEEE Trans Automatic Control_, **63**(8):2523-2536, 2018.
+[[DOI:10.1109/TAC.2017.2777187]](https://dx.doi.org/10.1109/TAC.2017.2777187)
+[[arXiv:1607.05294]](http://arxiv.org/abs/1607.05294)
+[[PDF:paper]](https://langbein.org/wp-content/uploads/2016/07/FeedbackControlLaws-2.pdf)
+[[Details]](https://langbein.org/design-feedback-control-laws-information-transfer-spintronics-networks/)
 
 ## Data files
 
@@ -69,4 +89,4 @@ The dataset was generated using the create_data_set.m function in the the direct
 
 ## Analysis
 
-The directory analysis_RNC contains some code previously used to analyze the dataset in https://qyber.black/spinnet/paper-sensiitivity-jt and spreadsheets summarizing the previous results.
+The directory analysis_RNC contains some code previously used to analyze the dataset in [2] and spreadsheets summarizing the previous results.
