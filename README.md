@@ -30,7 +30,7 @@ Cite the original published version as
 [[DOI:10.6084/m9.figshare.3485240.v1]](https://dx.doi.org/10.6084/m9.figshare.3485240.v1)
 [[Details]](https://langbein.org/static-bias-controllers-xx-spin-12-rings)
 
-The original archive is also available as [[FeedbackControlLaws20160703.zip]](uploads/c6fe0f14e219d0379d3721f66b2acc71/FeedbackControlLaws20160703.zip)
+The original archive is also available as [[FeedbackControlLaws20160703.zip]](https://d.qyber.black/data/data-static-bias-controllers-xx-spin-rings/FeedbackControlLaws20160703.zip)
 
 ## Data files
 
