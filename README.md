@@ -32,6 +32,8 @@ Cite the original published version as
 
 The original archive is also available as [[FeedbackControlLaws20160703.zip]](https://d.qyber.black/data/data-static-bias-controllers-xx-spin-rings/FeedbackControlLaws20160703.zip)
 
+This repository is mirrored at https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings
+
 ## Data files
 
 The controller dataset is contained in the directory data-set.  The data files are in Matlab MAT v7.3 format (created with Matlab 2021b).  The naming convention is
