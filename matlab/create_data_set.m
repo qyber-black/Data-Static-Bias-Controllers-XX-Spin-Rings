@@ -9,9 +9,9 @@ function create_data_set()
     s = set_bias_control_state(id);
 
     TargetMax = floor((Nmax+1)/2);
-    Time = zeros(Nmax,TargetMax);
+    Time  = zeros(Nmax,TargetMax);
     Error = zeros(Nmax,TargetMax);
-    MeanTime = zeros(1,TargetMax);
+    MeanTime  = zeros(1,TargetMax);
     MeanTimeN = zeros(1,TargetMax);
     MaxTime = nan(1,TargetMax);
     MinTime = nan(1,TargetMax);
@@ -27,8 +27,8 @@ function create_data_set()
           display(['Converting ' name]);
           data = load(['results/data_bias_control_' name '.mat']);
 
-          info.N = N;
-          info.in = data.Info.args.in;
+          info.N   = N;
+          info.in  = data.Info.args.in;
           info.out = data.Info.args.out;
           info.fastest_min_err = data.Info.args.min_err;
           if id == 0
@@ -42,7 +42,7 @@ function create_data_set()
 
           dpdJ = data.Info.args.obj.bias_sensitivity (results,data.Info,'couplings');
           E = arrayfun(@(l) results{l}.err, 1:size(results,2));
-          S = arrayfun(@(l) norm(dpdJ{l}), 1:size(results,2));
+          S = arrayfun(@(l) norm(dpdJ{l}),  1:size(results,2));
           [E,IDX] = sort(E);
           S = S(IDX);
           IDX = log10(E) < -1;
@@ -54,18 +54,15 @@ function create_data_set()
 
           % Create bias figure
           display(['Bias ' name]);
-          figure(1);
-          clf;
+          figure(1), clf;
           plot_bias(info, results, results_idx_best, results_idx_fastest, data.Info.args.obj);
-          drawnow();
-          refresh();
-          savefig(1, ['data_set/bias_' name '.fig'], 'compact');
-          screen2png(['data_set/bias_' name]);
+          drawnow(); refresh();
+          savefig(1, sprintf('data_set/bias_%s', name), 'compact');
+          screen2png(sprintf('data_set/bias_%s', name));
 
           % Create sensitivity figure
           display(['Sensitivity ' name]);
-          figure(2);
-          clf;
+          figure(2), clf;
            % Error
           line(1:size(sensitivity.error,2),log10(sensitivity.error),'Color','r','LineWidth',2);
           ax1 = gca;
@@ -80,13 +77,9 @@ function create_data_set()
           ax2.XColor = 'k';
           ax2.YColor = 'b';
           line(1:size(sensitivity.dpdJ_norm,2),log10(sensitivity.dpdJ_norm),'Parent',ax2,'Color','b');
-          if id == 0
-            ylabel(ax2,sprintf('log10(|dp(|out> <- |in>,T)/dJ|)'));
-            ylabel(ax1,sprintf('log10(1-p(|out> <- |in>,T))'));
-          else
-            ylabel(ax2,sprintf('log10(|dp(|out> <- |in>,T)/dJ|)'));
-            ylabel(ax1,sprintf('log10(1-p(|out> <- |in>,T))'));
-          end
+          ylabel(ax2,sprintf('log10(|dp(|out> <- |in>,T)/dJ|)'));
+          ylabel(ax1,sprintf('log10(1-p(|out> <- |in>,T))'));
+
           xlabel(ax1,'Run, ordered by increasing error, arb. units');
           title(sprintf('Error and sensitivity w.r.t. couplings for %d-ring, |1>-|%d>, tau_b=%.3g', N, target, sensitivity.taub));
           axis tight;
@@ -96,12 +89,12 @@ function create_data_set()
           screen2png(['data_set/sensitivity_' name]);
 
           if results_idx_fastest > 0
-            Time(N,target) = results{results_idx_fastest}.time;
-            Error(N,target) = results{results_idx_fastest}.err;
-            MeanTime(target) = MeanTime(target) + results{results_idx_fastest}.time;
+            Time(N,target)    = results{results_idx_fastest}.time;
+            Error(N,target)   = results{results_idx_fastest}.err;
+            MeanTime(target)  = MeanTime(target) + results{results_idx_fastest}.time;
             MeanTimeN(target) = MeanTimeN(target) + 1;
-            MinTime(target) = min(MinTime(target),results{results_idx_fastest}.time);
-            MaxTime(target) = max(MaxTime(target),results{results_idx_fastest}.time);
+            MinTime(target)   = min(MinTime(target),results{results_idx_fastest}.time);
+            MaxTime(target)   = max(MaxTime(target),results{results_idx_fastest}.time);
           end
 
         else
@@ -113,8 +106,7 @@ function create_data_set()
 
     % Summary plot for fastest results
     display(['Fastest ' s.id_str]);
-    figure(3);
-    clf;
+    figure(3), clf;
     h = bar3(Time(3:Nmax,2:TargetMax));
     for col = 1:TargetMax-1
       zdata = [];
@@ -140,7 +132,7 @@ function create_data_set()
     h = plot3(1:TargetMax-1,zeros(1,TargetMax-1),MeanTime(2:TargetMax)./MeanTimeN(2:TargetMax),'.r');
     set(h, 'MarkerSize', 25);
     for l = 2:TargetMax
-      h=plot3([l-1; l-1], [0; 0], [MinTime(l); MaxTime(l)], '-r');
+      h = plot3([l-1; l-1], [0; 0], [MinTime(l); MaxTime(l)], '-r');
       set(h, 'LineWidth', 2);
     end
     drawnow ();
@@ -154,7 +146,7 @@ function create_data_set()
   % Localisation
   s = set_localisation_state(1);
   for N = 3:Nmax       % Ring size
-    name = sprintf('dt-%d-1', N);
+    name  = sprintf('dt-%d-1', N);
     fname = sprintf('results/data_localisation_dt-%d.mat', N);
     % Find bias controls
     if exist(fname, 'file')
@@ -164,10 +156,10 @@ function create_data_set()
       data = load(fname);
 
       info.N = N;
-      info.in = data.Info.args.in;
+      info.in  = data.Info.args.in;
       info.out = data.Info.args.out;
-      info.dt = data.Info.args.readout(1);
-      results = data.Results;
+      info.dt  = data.Info.args.readout(1);
+      results  = data.Results;
       results_idx_best = data.best;
 
       dpdJ = data.Info.args.obj.bias_sensitivity (results,data.Info,'couplings');
@@ -185,17 +177,16 @@ function create_data_set()
 
       % Create bias figure
       display(['Bias ' name]);
-      figure(1);
-      clf;
+      figure(1), clf;
       tt = info.dt;
-      plot_time = [0:tt/1000:tt];
+      plot_time = 0:tt/1000:tt;
       % natural evolution
       plot_nat = data.Info.args.obj.trace(info.in,info.out,plot_time);
       % evolution with control
       H = data.Info.args.obj.H + diag(results{results_idx_best}.bias);
       [V,e] = eig (H);
       e = diag(e);
-      E = cellfun (@(x) V * diag(exp(-i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
+      E = cellfun (@(x) V * diag(exp(-1i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
       plot_ctrl =  cellfun (@(x) abs(x(info.out, info.in))^2, E);
       plot_result(results_idx_best, plot_time, plot_ctrl, plot_nat, 3,2,1,3,'Best solution');
       subplot(3,2,1);
@@ -246,18 +237,18 @@ function create_data_set()
     end
   end
 
-  function plot_bias (info, results, results_idx_best, results_idx_fastest, qsn)
+  function plot_bias(info, results, results_idx_best, results_idx_fastest, qsn)
     if results_idx_best > 0
       % Setup trace plots
       tt = results{results_idx_best}.time + info.dt/2;
-      plot_time = [0:tt/1000:tt];
+      plot_time = 0:tt/1000:tt;
       % natural evolution
       plot_nat = qsn.trace(info.in,info.out,plot_time);
       % evolution with control
       H = qsn.H + diag(results{results_idx_best}.bias);
       [V,e] = eig (H);
       e = diag(e);
-      E = cellfun (@(x) V * diag(exp(-i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
+      E = cellfun (@(x) V * diag(exp(-1i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
       plot_ctrl =  cellfun (@(x) abs(x(info.out, info.in))^2, E);
       plot_result(results_idx_best, plot_time, plot_ctrl, plot_nat, 3,3,1,4,'Best solution');
       subplot(3,2,5);
@@ -267,14 +258,14 @@ function create_data_set()
     if results_idx_fastest > 0
       % Setup trace plots
       tt = results{results_idx_fastest}.time + info.dt/2;
-      plot_time = [0:tt/1000:tt];
+      plot_time = 0:tt/1000:tt;
       % natural evolution
       plot_nat = qsn.trace(info.in,info.out,plot_time);
       % evolution with control
       H = qsn.H + diag(results{results_idx_fastest}.bias);
       [V,e] = eig (H);
       e = diag(e);
-      E = cellfun (@(x) V * diag(exp(-i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
+      E = cellfun (@(x) V * diag(exp(-1i * x * e)) * V', num2cell (plot_time), 'UniformOutput', false);
       plot_ctrl =  cellfun (@(x) abs(x(info.out, info.in))^2, E);
       plot_result(results_idx_fastest, plot_time, plot_ctrl, plot_nat, 3,3,2,5,'Fastest solution');
       subplot(3,2,6);
