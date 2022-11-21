@@ -1,6 +1,6 @@
 function calc_bias_controls(id,N,target,M)
-  % Calculate bias controls for id for ring of size N
-  % from 1 to tage. If M is zero, always calculate. Otherwise
+  % Calculate bias controls for id (t/dt/dtp) for ring of size N
+  % from 1 to target. If M is zero, always calculate. Otherwise
   % M is number of completed tasks and only calculate if
   % results do not yet exist.
   ring = qsn.QSN ('ring', N);
