@@ -5,7 +5,7 @@ function state = set_bias_control_state(id)
   %                 1 - .1 readout window
   %                 2 - .1 readout window with .05 perturbation and 500 samples
   %
-  % Return parameters for bias control for different cases/states used
+  % Returns parameters for bias control for different cases/states used
   % by other functions to fix numerical experiment parameters.
   %
 
@@ -34,14 +34,14 @@ function state = set_bias_control_state(id)
   elseif id == 1
     state.readout = [.1 0 0];      % Readout window (or empty to ignore)
                                    % readout(1) Time window for readout (0 - do not consider window)
-                                   % readout(2) Pertubation (or 0 for none, time window required)
+                                   % readout(2) Perturbation (or 0 for none, time window required)
                                    % readout(3) Samples for expectation over pertubation (if pertubation not 0)
     state.min_err = 0.01;          % Largest error acceptable for fastest solution.
     state.id_str = 'dt';
   elseif id == 2
     state.readout = [.1 0.05 500]; % Readout window (or empty to ignore)
                                    % readout(1) Time window for readout (0 - do not consider window)
-                                   % readout(2) Pertubation (or 0 for none, time window required)
+                                   % readout(2) Perturbation (or 0 for none, time window required)
                                    % readout(3) Samples for expectation over pertubation (if pertubation not 0)
     state.min_err = 0.1;           % Largest error acceptable for fastest solution.
     state.noise = 200;             % Add noise to initial values (or 0)
