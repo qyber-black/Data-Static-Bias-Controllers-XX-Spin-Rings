@@ -5,7 +5,8 @@ function create_data_set()
 
   Nmax = 20;
 
-  for id = [0 1]
+    for id = [0 1]
+
     s = set_bias_control_state(id);
 
     TargetMax = floor((Nmax+1)/2);
@@ -21,11 +22,11 @@ function create_data_set()
 
         name = sprintf('%s-%d-%d', s.id_str, N, target);
 
-        if exist(['results/data_bias_control_' name '.mat'], 'file')
+        if exist(['matlab/results/data_bias_control_' name '.mat'], 'file')
 
           % Convert data set for type id, ring size N, 1-target transition
           display(['Converting ' name]);
-          data = load(['results/data_bias_control_' name '.mat']);
+          data = load(['matlab/results/data_bias_control_' name '.mat']);
 
           info.N   = N;
           info.in  = data.Info.args.in;
@@ -50,15 +51,16 @@ function create_data_set()
           sensitivity.dpdJ_norm = S(IDX);
           sensitivity.taub = ktaub([E', S'], 0.05);
 
-          save(['data_set/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
+%          save(['data_set/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
+          save(['RNC-paper/data_2/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
 
           % Create bias figure
           display(['Bias ' name]);
           figure(1), clf;
           plot_bias(info, results, results_idx_best, results_idx_fastest, data.Info.args.obj);
           drawnow(); refresh();
-          savefig(1, sprintf('data_set/bias_%s', name), 'compact');
-          screen2png(sprintf('data_set/bias_%s', name));
+          savefig(1, sprintf('RNC-paper/data_2/figures/bias_%s', name), 'compact');
+          screen2png(sprintf('RNC-paper/data_2/figures/bias_%s', name));
 
           % Create sensitivity figure
           display(['Sensitivity ' name]);
@@ -85,8 +87,8 @@ function create_data_set()
           axis tight;
           drawnow();
           refresh();
-          savefig(2, ['data_set/sensitivity_' name '.fig'], 'compact');
-          screen2png(['data_set/sensitivity_' name]);
+          savefig(2, ['RNC-paper/data_2/figures/sensitivity_' name '.fig'], 'compact');
+          screen2png(['RNC-paper/data_2/figures/sensitivity_' name]);
 
           if results_idx_fastest > 0
             Time(N,target)    = results{results_idx_fastest}.time;
@@ -138,16 +140,16 @@ function create_data_set()
     drawnow ();
     refresh ();
     % Save
-    savefig(3, ['data_set/fastest_' s.id_str '.fig'], 'compact');
-    screen2png(['data_set/fastest_' s.id_str]);
+    savefig(3, ['RNC-paper/data_2/figures/fastest_' s.id_str '.fig'], 'compact');
+    screen2png(['RNC-paper/data_2/figures/fastest_' s.id_str]);
 
   end
 
   % Localisation
   s = set_localisation_state(1);
-  for N = 3:Nmax       % Ring size
+  for N = 15:Nmax       % Ring size
     name  = sprintf('dt-%d-1', N);
-    fname = sprintf('results/data_localisation_dt-%d.mat', N);
+    fname = sprintf('matlab/results/data_localisation_dt-%d.mat', N);
     % Find bias controls
     if exist(fname, 'file')
 
@@ -173,7 +175,7 @@ function create_data_set()
       % Kendall tau_b
       sensitivity.taub = ktaub([E', S'], 0.05);
 
-      save(['data_set/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
+      save(['RNC-paper/data_2/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
 
       % Create bias figure
       display(['Bias ' name]);
@@ -201,8 +203,8 @@ function create_data_set()
       axis tight;
       drawnow();
       refresh();
-      savefig(1, ['data_set/bias_' name '.fig'], 'compact');
-      screen2png(['data_set/bias_' name]);
+      savefig(1, ['RNC-paper/data_2/figures/bias_' name '.fig'], 'compact');
+      screen2png(['RNC-paper/data_2/figures/bias_' name]);
 
       % Create sensitivity figure
       display(['Sensitivity ' name]);
@@ -229,8 +231,8 @@ function create_data_set()
       axis tight;
       drawnow();
       refresh();
-      savefig(2, ['data_set/sensitivity_' name '.fig'], 'compact');
-      screen2png(['data_set/sensitivity_' name]);
+      savefig(2, ['RNC-paper/data_2/figures/sensitivity_' name '.fig'], 'compact');
+      screen2png(['RNC-paper/data_2/figures/sensitivity_' name]);
 
     else
       error(['Missing ' name]);
