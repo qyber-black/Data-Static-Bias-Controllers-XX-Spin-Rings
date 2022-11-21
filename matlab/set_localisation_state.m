@@ -27,10 +27,7 @@ function state = set_localisation_states(id)
   state.p_str = 'unknown';
 
   if id == 1
-    state.readout = [state.CT];   % Reatdout window (or empty to ignore)
-                            %  readout(1) Time window for readout (0 - do not consider window)
-                            %  readout(2) Pertubation (or 0 for none, time window required)
-                            %  readout(3) Samples for expectation over pertubation (if pertubation not 0)
+    state.readout = [state.CT];   % Reatdout window
     state.id_str = 'dt';
     state.p_str = 'T,dT';
   elseif id == 2
