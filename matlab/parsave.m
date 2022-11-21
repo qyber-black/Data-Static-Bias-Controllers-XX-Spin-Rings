@@ -1,6 +1,6 @@
 function parsave(name, Results, best, fastest, FailedRuns, Info, base, m)
   % Helper function for compute_bias_controls/localisation
-  save(['results/data_' name '.mat'], '-v7.3', 'Results', 'best', 'fastest', 'FailedRuns', 'Info');
+  save(['matlab/results/data_' name '.mat'], '-v7.3', 'Results', 'best', 'fastest', 'FailedRuns', 'Info');
   n = size(dir(['results/data_' base '-*.mat']),1);
   if m == 0
     if isempty(Results)
