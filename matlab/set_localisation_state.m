@@ -1,11 +1,15 @@
 function state = set_localisation_states(id)
-  % create_localiation (states)
-  %
-  % id  Readout id: 1 - .1 readout window
-  %                 2 - .1 readout window with .05 pertubation and 500 samples
-  %
-  % Create static bias control figures for localising spin 1
-  % in N rings for N=3:30.
+% create_localiation (states)
+%
+% id  Readout id: 1 - .1 readout window
+%                 2 - .1 readout window with .05 pertubation and 500 samples
+%
+% Create static bias control figures for localising spin 1
+% in N rings for N=3:30.
+
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
 
   if ~exist('id','var')
     error('No localisation state specified');

@@ -1,7 +1,20 @@
 function create_data_set()
-  % create_data_set ()
-  %
-  % Create data set from raw results.
+% create_data_set ()
+%
+% Create data set from raw results.
+
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+% SPDX-License-Identifier: CC-BY-SA-4.0  
+
+if ~exist('../data/data','dir')
+    mkdir('../data/data');
+end
+
+if ~exist('../figures/core','dir')
+    mkdir('../figures/core');
+end
 
   Nmax = 20;
 
@@ -17,16 +30,16 @@ function create_data_set()
     MaxTime = nan(1,TargetMax);
     MinTime = nan(1,TargetMax);
 
-    for N = 3:Nmax
+    for N = 3:20
       for target = 2:floor((N+1)/2) % 1 to target transition (in ring)
 
         name = sprintf('%s-%d-%d', s.id_str, N, target);
 
-        if exist(['matlab/results/data_bias_control_' name '.mat'], 'file')
+        if exist(['../data/data_bias_control/data_bias_control_' name '.mat'], 'file')
 
           % Convert data set for type id, ring size N, 1-target transition
           display(['Converting ' name]);
-          data = load(['matlab/results/data_bias_control_' name '.mat']);
+          data = load(['../data/data_bias_control/data_bias_control_' name '.mat']);
 
           info.N   = N;
           info.in  = data.Info.args.in;
@@ -51,16 +64,15 @@ function create_data_set()
           sensitivity.dpdJ_norm = S(IDX);
           sensitivity.taub = ktaub([E', S'], 0.05);
 
-%          save(['data_set/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
-          save(['RNC-paper/data_2/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
+          save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
 
           % Create bias figure
           display(['Bias ' name]);
           figure(1), clf;
           plot_bias(info, results, results_idx_best, results_idx_fastest, data.Info.args.obj);
           drawnow(); refresh();
-          savefig(1, sprintf('RNC-paper/data_2/figures/bias_%s', name), 'compact');
-          screen2png(sprintf('RNC-paper/data_2/figures/bias_%s', name));
+          savefig(1, sprintf('../figures/core/bias_%s', name), 'compact');
+          screen2png(sprintf('../figures/core/bias_%s', name));
 
           % Create sensitivity figure
           display(['Sensitivity ' name]);
@@ -87,8 +99,8 @@ function create_data_set()
           axis tight;
           drawnow();
           refresh();
-          savefig(2, ['RNC-paper/data_2/figures/sensitivity_' name '.fig'], 'compact');
-          screen2png(['RNC-paper/data_2/figures/sensitivity_' name]);
+          savefig(2, ['../figures/sensitivity/sensitivity_' name '.fig'], 'compact');
+          screen2png(['../figures/sensitivity/sensitivity_' name]);
 
           if results_idx_fastest > 0
             Time(N,target)    = results{results_idx_fastest}.time;
@@ -140,16 +152,17 @@ function create_data_set()
     drawnow ();
     refresh ();
     % Save
-    savefig(3, ['RNC-paper/data_2/figures/fastest_' s.id_str '.fig'], 'compact');
-    screen2png(['RNC-paper/data_2/figures/fastest_' s.id_str]);
+    savefig(3, ['../figures/core/fastest_' s.id_str '.fig'], 'compact');
+    screen2png(['../figures/core/fastest_' s.id_str]);
 
-  end
+end 
+
 
   % Localisation
   s = set_localisation_state(1);
-  for N = 15:Nmax       % Ring size
+  for N = 3:Nmax       % Ring size
     name  = sprintf('dt-%d-1', N);
-    fname = sprintf('matlab/results/data_localisation_dt-%d.mat', N);
+    fname = sprintf('../data/data_bias_control/data_localisation_dt-%d.mat', N);
     % Find bias controls
     if exist(fname, 'file')
 
@@ -175,7 +188,7 @@ function create_data_set()
       % Kendall tau_b
       sensitivity.taub = ktaub([E', S'], 0.05);
 
-      save(['RNC-paper/data_2/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
+      save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
 
       % Create bias figure
       display(['Bias ' name]);
@@ -203,8 +216,8 @@ function create_data_set()
       axis tight;
       drawnow();
       refresh();
-      savefig(1, ['RNC-paper/data_2/figures/bias_' name '.fig'], 'compact');
-      screen2png(['RNC-paper/data_2/figures/bias_' name]);
+      savefig(1, ['../figures/core/bias_' name '.fig'], 'compact');
+      screen2png(['../figures/core/bias_' name]);
 
       % Create sensitivity figure
       display(['Sensitivity ' name]);
@@ -231,14 +244,15 @@ function create_data_set()
       axis tight;
       drawnow();
       refresh();
-      savefig(2, ['RNC-paper/data_2/figures/sensitivity_' name '.fig'], 'compact');
-      screen2png(['RNC-paper/data_2/figures/sensitivity_' name]);
+      savefig(2, ['../figures/sensitivity/sensitivity_' name '.fig'], 'compact');
+      screen2png(['../figures/sensitivity/sensitivity_' name]);
 
     else
       error(['Missing ' name]);
     end
   end
 
+  
   function plot_bias(info, results, results_idx_best, results_idx_fastest, qsn)
     if results_idx_best > 0
       % Setup trace plots
@@ -289,8 +303,8 @@ function create_data_set()
     title(sprintf('Log(Error) histogram over %d runs', size(results,2)));
     axis tight;
     mtit(sprintf('Bias control for |%d>-|%d> transition in ring of N=%d spins', info.in, info.out, info.N));
-  end
-
+    end
+ 
   % Plot results
   function plot_result (run, plot_time, plot_ctrl, plot_nat, X, Y, trace_fig, bias_fig, str)
     % Plot traces
@@ -391,6 +405,6 @@ function create_data_set()
     print('-dpng', filename, '-r100');
     drawnow
     set(gcf,'Units',oldscreenunits, 'PaperUnits',oldpaperunits, 'PaperPosition',oldpaperpos, 'outerposition', oldouterpos);
-    drawnow
+    drawnow 
   end
 end

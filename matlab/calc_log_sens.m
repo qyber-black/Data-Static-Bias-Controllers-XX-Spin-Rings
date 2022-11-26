@@ -1,11 +1,11 @@
 %% Calcuate log-sensitivy (calc_log_sens)
-
+%
 % This routine takes as input the Hamiltonian for an ring of N spins, a
 % controller optimized for maximum fidelity at a given time t under 
 % coherent dynamics, and the time for maximum transfer and calcuates and
 % plots the log-sensitivity of the fidelity error to perturbations in the
 % Hamiltonian (couplings) or the controls (bias fields). 
-
+%
 % On Input or Used for Execution Computations
 % N - size of spin-ring
 % type - (1) 'dt' - time transfer of window of 0.1 about t
@@ -28,7 +28,7 @@
 % c - row vector such that c*exmp(A*t)*r_in provides fidelity error 
 % Sb - 2*N strctrue of Bloch transformed perturbation matrices 
 % X - N^2 by N^2 matrix of exponentials and 
-
+%
 % On output and saved to
 % log-sensitivity-new/log_sens_results/log_sens_data_t/dt-N-out:
 % log_sens - array of log-sensitivity of the error calucated for each
@@ -57,8 +57,7 @@
 %          in the Bloch formulation 
 % old_sens - sensitivity extracted from the "data_t/dt-N-out" file and
 %            ordered by decreasing fidelity 
- 
-
+%
 % Figures saved on output:
 % log_sens_figure_t/dt_N-out_S' - log-sens vs. fidelity error for each
 %                                 perturbation S{k}
@@ -66,20 +65,21 @@
 % log-sensitivity to Hamilonian perturbations and bias perturbations vs
 % error and filtered for fidelity error less than 0.1
 
-
+% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
 
 clear all; close all; clc;
 
-if ~exist('../log-sensitivity-new/log_sens_results','dir')
-    mkdir('../log-sensitivity-new/log_sens_results');
+if ~exist('../results/log_sens_results','dir')
+    mkdir('../reulsts/log_sens_results');
 end
 
-if ~exist('../log-sensitivity-new/figures','dir')
-    mkdir('../log-sensitivity-new/figures');
+if ~exist('../figures/log-sensitivity-updated','dir')
+    mkdir('../figures/log-sensitivity-updated');
 end
 
-if ~exist('../log-sensitivity-new/figures/composite','dir')
-    mkdir('../log-sensitivity-new/figures/composite');
+if ~exist('../figures/log-sensitivity-updated/composite','dir')
+    mkdir('../figures/log-sensitivity-updated/composite');
 end
 
 % Outer loop for t vs. dt transfer 
@@ -93,21 +93,23 @@ for type = 2:2
     end
 
 % Loop for ring of each size 
-for N = 11:20
+for N = 3:20
     I = eye(N);
     e = arrayfun(@(n) I(:,n),1:N,'UniformOutput',0);
     obj = qsn.QSN('ring',N); % produce QSN object for ring of size N
     b = bloch_basis(N,I);    % produce Bloch basis matrices 
     for out = start:ceil(N/2)
        X = zeros(N^2,N^2);   % initialize X for computation of log-sens 
-       tag1 = sprintf('data/data_%s-%d-%d',id,N,out);
        if out == 1;
-           tag2 = sprintf('results-robustness/data_localisation_%s-%d-robustness',id,N);
+           tag1 = sprintf('..data/data_bias_control/data_localisation_%s-%d',id,N);
+           tag2 = sprintf('../results/data_bias_control_robustness/data_localisation_%s-%d-robustness',id,N);
        else
-           tag2 = sprintf('results-robustness/data_bias_control_%s-%d-%d-robustness',id,N,out);
+           tag1 = sprintf('../data/data_bias_control/data_bias_control_%s-%d-%d',id,N,out);
+           tag2 = sprintf('../results/data_bias_control_robustness/data_bias_control_%s-%d-%d-robustness',id,N,out);
        end
-       load(tag1); % load data files to extract controllers and transfer time
-       load(tag2); % load old robustness files for data comparison 
+   
+       load(tag1); % load data files for controller data, transfer time
+       load(tag2); % load data for sensitivity comparison
        
        % build perturbation structure matrices 
        for ell = 1:N
@@ -121,15 +123,15 @@ for N = 11:20
        S{2*N} = e{1}*e{N}'+e{N}*e{1}';
         
        % Inner loop for computation of data per transfer 
-       M = max(size(results));
+       M = max(size(Results));
        status = sprintf('N=%d target=%d type=%s',N,out,id);
        disp(status);
        for k = 1:M
-           D = diag(results{k}.bias); % produce control matrix
+           D = diag(Results{k}.bias); % produce control matrix
            Hd = obj.H+D;              % produce controlled Hamiltonian 
            [A,Sb,lambda,V,r_in,r_out,c] = bloch(N,Hd,S,e,out,b); % Bloch transformation 
-           t = results{k}.time;       % extract transfer time
-           error1(k,1) = results{k}.err;    % extract original fidelity error 
+           t = Results{k}.time;       % extract transfer time
+           error1(k,1) = Results{k}.err;    % extract original fidelity error 
            error2(k,1) = c*expm(A*t)*r_in;  % compute updated fidelity error 
            
            % Inner loop for computation per perturbation 
@@ -197,8 +199,8 @@ log_sens_short.norm(k,1) = norm(log_sens_filtered(k,1:2*N));
 end
 
 % save results 
-savetag = sprintf('../log-sensitivity-new/log_sens_results/log_sens_data_%s_%d-%d',id,N,out);
-save(savetag,'log_sens','sens','results','error1','error2','log_sens_filtered','log_sens_short','old_sens');
+savetag = sprintf('../results/log_sens_results/log_sens_data_%s_%d-%d',id,N,out);
+save(savetag,'log_sens','sens','Results','error1','error2','log_sens_filtered','log_sens_short','old_sens');
 
 index = 1:max(size(error1));
 
@@ -212,7 +214,7 @@ legend('Hamiltonian Perturbations','Bias Perturbations');
 titletag = sprintf('Log-Sensitivity vs. Fidelity Error for %s-%d-%d',id,N,out);
 title(titletag);
 
-figtag = sprintf('../log-sensitivity-new/figures/composite/log_sens_composite_%s_%d-%d',id,N,out);
+figtag = sprintf('../figures/log-sensitivity-updated/composite/log_sens_composite_%s_%d-%d',id,N,out);
 savefig(figtag);
 saveas(gcf,figtag,'png');
 
@@ -234,7 +236,7 @@ set(findall(gcf,'-property','FontSize'),'FontSize',14);
 titletag=sprintf('%s %d-%d Perturbation S=%d',id,N,out,ell);
 title(titletag)
 
-figtag = sprintf('../log-sensitivity-new/figures/log_sens_figure_%s_%d-%d_S=%d',id,N,out,ell);
+figtag = sprintf('../figures/log-sensitivity-updated/figures/log_sens_figure_%s_%d-%d_S=%d',id,N,out,ell);
 savefig(figtag);
 
 

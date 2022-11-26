@@ -1,11 +1,11 @@
 function [taub tau h sig Z S sigma sen n senplot CIlower CIupper D Dall C3 nsigma] = ktaub(datain, alpha)
   % Mann-Kendall Tau (aka Tau-b) with Sen's Method (enhanced)
   % A non-parametric monotonic trend test computing Mann-Kendall Tau, Tau-b,
-  % and Sen’s Slope written in Mathworks-MATLAB implemented using matrix
+  % and Senï¿½s Slope written in Mathworks-MATLAB implemented using matrix
   % rotations.
   %
   % Based on Burkey, Jeff. May 2006.  A non-parametric monotonic trend test computing
-  %      Mann-Kendall Tau, Tau-b, and Sen’s Slope written in Mathworks-MATLAB
+  %      Mann-Kendall Tau, Tau-b, and Senï¿½s Slope written in Mathworks-MATLAB
   %      implemented using matrix rotations. King County, Department of Natural
   %      Resources and Parks, Science and Technical Services section.
   %      Seattle, Washington. USA.
@@ -77,6 +77,8 @@ function [taub tau h sig Z S sigma sen n senplot CIlower CIupper D Dall C3 nsigm
   %  Scientific Investigations Report 2005-5275
   %  http://pubs.usgs.gov/sir/2005/5275/downloads/
   %
+  % SPDX-FileCopyrightText: Copyright (c) 2013, Jeff Burkey
+  % SPDX-License-Identifier: BSD-3-Clause
   %
   % Written by Jeff Burkey
   % King County, Department of Natural Resources and Parks

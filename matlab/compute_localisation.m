@@ -1,12 +1,20 @@
 function compute_localisation(states)
-  % compute_localiation (states)
-  %
-  % states  Readout id: 1 - .1 readout window
-  %                     2 - .1 readout window with .05 pertubation and 500 samples
-  %         Can be a vector for multiple options
-  %
-  % Create static bias control figures for localising spin 1
-  % in N rings for N=3:30.
+% compute_localiation (states)
+%
+% states  Readout id: 1 - .1 readout window
+%                     2 - .1 readout window with .05 pertubation and 500 samples
+%         Can be a vector for multiple options
+%
+% Create static bias control figures for localising spin 1
+% in N rings for N=3:30.
+
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
+
+  if ~exist('../data/data_bias_control','dir')
+    mkdir('../data/data_bias_control');
+  end
 
   if ~exist('states','var')
     states = [1 2];
@@ -28,7 +36,7 @@ function compute_localisation(states)
     ring = qsn.QSN ('ring', N);
     name = sprintf('localisation_%s-%d', s.id_str, N);
     % Find bias controls
-    if ~exist(['results/data_' name '.mat'], 'file')
+    if ~exist(['../data/data_bias_control/data_' name '.mat'], 'file')
       parsave(name, [], [], [],[], [], sprintf('localisation_%s',s.id_str) , size(find(problems(:,1) == id),1));
       [Results,best,fastest,FailedRuns,info] = ring.bias_control(1,1, s.CT/2, s.B, s.readout, s.min_err, s.repeats, s.symm, s.initT, s.bias_init, s.noise, 0);
       parsave(name, Results, best, fastest, FailedRuns, info, sprintf('localisation_%s',s.id_str) , size(find(problems(:,1) == id),1));

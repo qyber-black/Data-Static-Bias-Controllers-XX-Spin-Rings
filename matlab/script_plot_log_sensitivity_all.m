@@ -1,5 +1,11 @@
 % script to plot log sensitivity data
-FILES = dir('results-robustness/*.mat')
+
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
+
+FILES = dir('../results/data_bias_control_robustness/*.mat')
 for k=1:length(FILES)
     load(fullfile(FILES(k).folder,FILES(k).name)); 
     figure(1), clf, 

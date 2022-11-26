@@ -9,6 +9,10 @@ function state = set_bias_control_state(id)
   % by other functions to fix numerical experiment parameters.
   %
 
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
+
   if ~exist('id','var')
     error('No state given');
   end
