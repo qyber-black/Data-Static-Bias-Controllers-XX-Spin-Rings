@@ -1,8 +1,13 @@
 %% Produce Bloch Basis Only One Time Per Iteration
 
-function [b]=bloch_basis(N,I);
+function [b]=bloch_basis(N,I)
 
-% Produce Natrual Basis Vectors
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
+
+% Produce Natural Basis Vectors
 for j=1:N
     e{j}=I(:,j);
 end

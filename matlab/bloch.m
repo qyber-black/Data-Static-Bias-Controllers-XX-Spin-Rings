@@ -1,6 +1,11 @@
 %% Produce Bloch Transformed Matrices
 function [A,Sb,lambda,V,r_in,r_out,c] = bloch(N,Hd,S,e,out_index,b)
 
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+% SPDX-License-Identifier: CC-BY-SA-4.0 
+
 % Define input and output 
 in = e{1};
 out = e{out_index}';
