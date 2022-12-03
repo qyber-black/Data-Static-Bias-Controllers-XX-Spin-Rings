@@ -35,9 +35,14 @@ This repository is mirrored at [https://github.com/qyber-black/Data-Static-Bias-
 
 **Version 2.0.0**
 
-S O'Neil, EA Jonckheere, FC Langbein, SG Schirmer. **Static Bias Controllers for XX Spin-1/2 Rings**, Version 2.0.0. Data set, 2022.
+S O'Neil, FC Langbein, SG Schirmer. **Static Bias Controllers for XX Spin-1/2 Rings**, Version 2.0.0. Data set, 2022.
 [Github: [https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings/releases/tag/v2.0.0](https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings/releases/tag/v2.0.0)]
 [Qyber\black: [https://qyber.black/spinnet/data-static-bias-controllers-xx-spin-rings/-/tree/v2.0.0](https://qyber.black/spinnet/data-static-bias-controllers-xx-spin-rings/-/tree/v2.0.0)]
+
+Published here:
+
+FC Langbein, S O'Neil, SG Schirmer. **Energy landscape controllers for quantum state transfer in spin-1/2 networks with ring topology**, Version 1, Research Directions, Cambridge Open Engage, Dec 02, 2022.
+[[DOI:10.33774/coe-2022-35xgg](https://doi.org/10.33774/coe-2022-35xgg)]
 
 **Version 1.0.0**
 
