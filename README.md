@@ -56,7 +56,7 @@ FC Langbein, SG Schirmer, EA Jonckheere. **Static Bias Controllers for XX Spin-1
 [[DOI:10.6084/m9.figshare.3485240.v1]](https://dx.doi.org/10.6084/m9.figshare.3485240.v1)
 [[Details]](https://langbein.org/static-bias-controllers-xx-spin-12-rings)
 
-and is also available as [[FeedbackControlLaws20160703.zip]](https://d.qyber.black/data/data-static-bias-controllers-xx-spin-rings/FeedbackControlLaws20160703.zip).
+and is also available as [[FeedbackControlLaws20160703.zip]](https://qyber.black/spinnet/info-spinnet/-/wikis/uploads/49ef12afb7c99d7598d1d37363298e14/FeedbackControlLaws20160703.zip).
 
 ## Data files
 
