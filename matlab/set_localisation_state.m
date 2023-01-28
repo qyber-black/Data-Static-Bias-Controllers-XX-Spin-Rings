@@ -31,7 +31,7 @@ function state = set_localisation_states(id)
   state.p_str = 'unknown';
 
   if id == 1
-    state.readout = [state.CT];   % Reatdout window
+    state.readout = [state.CT];   % Readout window
     state.id_str = 'dt';
     state.p_str = 'T,dT';
   elseif id == 2

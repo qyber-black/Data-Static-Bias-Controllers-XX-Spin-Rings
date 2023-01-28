@@ -28,7 +28,7 @@ function compute_localisation(states)
     end
   end
   M = size(problems,1);
-  parfor l = 1:M
+  parfor l = 3:M
     id = problems(l,1);
     N = problems(l,2);
     % Setup network
