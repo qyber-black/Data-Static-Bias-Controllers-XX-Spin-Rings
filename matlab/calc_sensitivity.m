@@ -19,5 +19,13 @@ N = length(Info.controls{1});
 L = length(Results);
 robustness.error = arrayfun(@(n)Results{n}.err,1:L);
 robustness.sensitivity = Info.args.obj.bias_sensitivity(Results,Info);
-robustness.logSensitivity.Hamiltonian = arrayfun(@(n)norm(robustness.sensitivity{n}(N+1:2*N))/Results{n}.err,1:L);
-robustness.logSensitivity.Controller  = arrayfun(@(n)norm(robustness.sensitivity{n}(1:N))/Results{n}.err,1:L);
+
+for x = 1:L
+robustness.log_sensitivity{x} = robustness.sensitivity{x}./robustness.error(x);
+end
+
+robustness.logSensitivity.Hamiltonian = arrayfun(@(n)norm(robustness.log_sensitivity{n}(N+1:2*N)),1:L);
+robustness.logSensitivity.Controller  = arrayfun(@(n)norm(robustness.log_sensitivity{n}(1:N)),1:L);
+
+%robustness.logSensitivity.Hamiltonian = arrayfun(@(n)norm(robustness.sensitivity{n}(N+1:2*N))/Results{n}.err,1:L);
+%robustness.logSensitivity.Controller  = arrayfun(@(n)norm(robustness.sensitivity{n}(1:N))/Results{n}.err,1:L);

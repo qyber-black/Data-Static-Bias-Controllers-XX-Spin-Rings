@@ -1,27 +1,30 @@
 function create_data_set()
-% create_data_set ()
-%
-% Create data set from raw results.
+  % create_data_set ()
+  %
+  % Create data set from raw results.
 
-% SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
-% SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
-% SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
-% SPDX-License-Identifier: CC-BY-SA-4.0  
+  % SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>
+  % SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>
+  % SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
+  % SPDX-License-Identifier: CC-BY-SA-4.0  
 
-if ~exist('../data/data','dir')
+  if ~exist('../data/data','dir')
     mkdir('../data/data');
-end
+  end
 
-if ~exist('../figures/core','dir')
+  if ~exist('../figures/core','dir')
     mkdir('../figures/core');
-end
+  end
+
+  if ~exist('../figures/sensitivity','dir')
+    mkdir('../figures/sensitivity');
+  end
 
   Nmax = 20;
 
-    for id = [0 1]
+  for id = [0 1]
 
     s = set_bias_control_state(id);
-
     TargetMax = floor((Nmax+1)/2);
     Time  = zeros(Nmax,TargetMax);
     Error = zeros(Nmax,TargetMax);
@@ -30,7 +33,7 @@ end
     MaxTime = nan(1,TargetMax);
     MinTime = nan(1,TargetMax);
 
-    for N = 3:20
+    for N = 3:Nmax
       for target = 2:floor((N+1)/2) % 1 to target transition (in ring)
 
         name = sprintf('%s-%d-%d', s.id_str, N, target);
@@ -64,7 +67,7 @@ end
           sensitivity.dpdJ_norm = S(IDX);
           sensitivity.taub = ktaub([E', S'], 0.05);
 
-          save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
+%          save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'results_idx_fastest', 'sensitivity');
 
           % Create bias figure
           display(['Bias ' name]);
@@ -116,6 +119,7 @@ end
         end
 
       end
+    
     end
 
     % Summary plot for fastest results
@@ -154,9 +158,7 @@ end
     % Save
     savefig(3, ['../figures/core/fastest_' s.id_str '.fig'], 'compact');
     screen2png(['../figures/core/fastest_' s.id_str]);
-
-end 
-
+  end 
 
   % Localisation
   s = set_localisation_state(1);
@@ -188,7 +190,7 @@ end
       % Kendall tau_b
       sensitivity.taub = ktaub([E', S'], 0.05);
 
-      save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
+%      save(['../data/data/data_' name '.mat'], '-v7.3', 'info', 'results', 'results_idx_best', 'sensitivity');
 
       % Create bias figure
       display(['Bias ' name]);
@@ -246,14 +248,13 @@ end
       refresh();
       savefig(2, ['../figures/sensitivity/sensitivity_' name '.fig'], 'compact');
       screen2png(['../figures/sensitivity/sensitivity_' name]);
-
     else
       error(['Missing ' name]);
     end
+
   end
 
-  
-  function plot_bias(info, results, results_idx_best, results_idx_fastest, qsn)
+ function plot_bias(info, results, results_idx_best, results_idx_fastest, qsn)
     if results_idx_best > 0
       % Setup trace plots
       tt = results{results_idx_best}.time + info.dt/2;
@@ -303,8 +304,8 @@ end
     title(sprintf('Log(Error) histogram over %d runs', size(results,2)));
     axis tight;
     mtit(sprintf('Bias control for |%d>-|%d> transition in ring of N=%d spins', info.in, info.out, info.N));
-    end
- 
+ end
+
   % Plot results
   function plot_result (run, plot_time, plot_ctrl, plot_nat, X, Y, trace_fig, bias_fig, str)
     % Plot traces
@@ -407,4 +408,5 @@ end
     set(gcf,'Units',oldscreenunits, 'PaperUnits',oldpaperunits, 'PaperPosition',oldpaperpos, 'outerposition', oldouterpos);
     drawnow 
   end
+
 end

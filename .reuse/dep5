@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Data - Static Bias Controllers for XX Spin Rings
+Upstream-Contact: Frank C Langbein <frank@langbein.org>
+Source: https://qyber.black/spinnet/data-static-bias-controllers-spin-rings
+
+Files: data/*
+Copyright: Copyright (C) 2022 S Shermer <lw1660@gmail.com>, Swansea University;  Copyright (C) 2022 Frank C Langbein <frank@langbein.org>, Cardiff University; SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>, University of Southern California/US Army
+License: CC-BY-SA-4.0
