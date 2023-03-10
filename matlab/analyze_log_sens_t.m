@@ -59,8 +59,8 @@ count = 0;
 for N = 3:20
 for target = 2:ceil(N/2)
     count = count+1;
-        tag1 = sprintf('../results/data_bias_control_robustness/data_bias_control_t-%d-%d-robustness',N,target);
-        file = sprintf('../data/data_bias_control/data_bias_control_t-%d-%d',N,target);
+    tag1 = sprintf('../results/data_bias_control_robustness/data_bias_control_t-%d-%d-robustness',N,target);
+    file = sprintf('../data/data_bias_control/data_bias_control_t-%d-%d',N,target);
     load(tag1); %load robustness data 
     load(file); %load controller data 
     I = eye(N);

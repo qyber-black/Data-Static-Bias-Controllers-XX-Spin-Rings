@@ -14,7 +14,7 @@ function robustness = calc_sensitivity(file)
 % SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>
 % SPDX-License-Identifier: CC-BY-SA-4.0 
 
-load(file)
+load(file);
 N = length(Info.controls{1});
 L = length(Results);
 robustness.error = arrayfun(@(n)Results{n}.err,1:L);
