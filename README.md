@@ -1,8 +1,8 @@
 # Static Bias Controllers for XX Spin-1/2 Rings
 
-> SPDX-FileCopyrightText: Copyright (C) 2020-2022 SM Shermer <lw1660@gmail.com>\
-> SPDX-FileCopyrightText: Copyright (C) 2020-2022 Frank C Langbein <frank@langbein.org>, Cardiff University\
-> SPDX-FileCopyrightText: Copyright (C) 2022 Sean Patrick O'Neil <seanonei@usc.edu>\
+> SPDX-FileCopyrightText: Copyright (C) 2020-2023 SM Shermer <lw1660@gmail.com>\
+> SPDX-FileCopyrightText: Copyright (C) 2020-2023 Frank C Langbein <frank@langbein.org>, Cardiff University\
+> SPDX-FileCopyrightText: Copyright (C) 2022-2023 Sean Patrick O'Neil <seanonei@usc.edu>\
 > SPDX-License-Identifier: CC-BY-SA-4.0
 
 Propagation of information encoded in spin degrees of freedom through networks of coupled spins enables important applications in spintronics and quantum information processing. This data set contains the results of applying optimal control of information propagation in networks of spin-1/2 particles with uniform nearest neighbor XX-couplings forming a ring with a single excitation in the network as simple prototype of a router for spin-based information. The control is implemented via spatially distributed potentials, which remain constant during information transfer. The limited degrees of freedom makes finding a control that maximizes the transfer probability in a short time difficult.
@@ -32,6 +32,14 @@ For further details see
 This repository is mirrored at [https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings](https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings).
 
 ## Versions 
+
+**Version 2.0.1**
+
+S O'Neil, FC Langbein, SG Schirmer. **Static Bias Controllers for XX Spin-1/2 Rings**, Version 2.0.1. Data set, 2023.
+[Github: [https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings/releases/tag/v2.0.1](https://github.com/qyber-black/Data-Static-Bias-Controllers-XX-Spin-Rings/releases/tag/v2.0.1)]
+[Qyber\black: [https://qyber.black/spinnet/data-static-bias-controllers-xx-spin-rings/-/tree/v2.0.0](https://qyber.black/spinnet/data-static-bias-controllers-xx-spin-rings/-/tree/v2.0.1)]
+
+  * Update of t and dt controllers for spin rings N=1..20. This has been created/checked for completeness by running `matlab/generate_all.m`
 
 **Version 2.0.0**
 
